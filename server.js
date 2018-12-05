@@ -23,21 +23,32 @@ var server = http.createServer(function(request, response){
 
   if(path == '/'){
     var string=fs.readFileSync('./index.html','utf-8')
+    var amount=fs.readFileSync('./db','utf-8')
+    string=string.replace('&&amount&&',amount)
     response.setHeader('Content-Type', 'text/html; charset=utf-8')
     response.write(string)
     response.end()
   }else if(path == '/style.css'){
     var string=fs.readFileSync('./style.css','utf-8')
-    response.setHeader('Content-Type', 'text/css; charset=utf-8')
-    response.write('body{color:red;}')
+    response.setHeader('Content-Type', 'text/css')
+    response.write(string)
     response.end()
   }else if(path == '/main.js'){
     var string=fs.readFileSync('./main.js','utf-8')
-    response.setHeader('Content-Type', 'text/javascript; charset=utf-8')
+    response.setHeader('Content-Type', 'text/javascript')
+    response.write(string)
+    response.end()
+  }else if(path=='/pay'){
+    var amount=fs.readFileSync('./db','utf-8')
+    var newAmount=amount-1
+    response.setHeader('Content-Type', 'image/jpg')
+    fs.writeFileSync('./db',newAmount)
+    var string=fs.readFileSync('./image.jpg')
+    response.write(string)
     response.end()
   }else{
     response.statusCode = 404
-    response.write(string)
+    response.write('找不到')
     response.end()
   }
 
