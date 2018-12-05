@@ -41,10 +41,10 @@ var server = http.createServer(function(request, response){
   }else if(path=='/pay'){
     var amount=fs.readFileSync('./db','utf-8')
     var newAmount=amount-1
-    response.setHeader('Content-Type', 'image/jpg')
+    response.setHeader('Content-Type', 'text/javascript')
     fs.writeFileSync('./db',newAmount)
     var string=fs.readFileSync('./image.jpg')
-    response.write(string)
+    response.write('amount.innerText=amount.innerText-1')
     response.end()
   }else{
     response.statusCode = 404
