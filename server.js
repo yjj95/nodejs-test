@@ -44,7 +44,12 @@ var server = http.createServer(function(request, response){
     response.setHeader('Content-Type', 'text/javascript')
     fs.writeFileSync('./db',newAmount)
     var string=fs.readFileSync('./image.jpg')
-    response.write('amount.innerText=amount.innerText-1')
+    response.write(`
+      ${query.callback}.call(undefined,{
+        "success":true,
+        "amount":${newAmount}
+      })`
+    )
     response.end()
   }else{
     response.statusCode = 404
