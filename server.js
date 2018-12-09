@@ -45,10 +45,10 @@ var server = http.createServer(function(request, response){
     fs.writeFileSync('./db',newAmount)
     var string=fs.readFileSync('./image.jpg')
     response.write(`
-      ${query.callback}.call(undefined,{
+      {
         "success":true,
         "amount":${newAmount}
-      })`
+      }`
     )
     response.end()
   }else{
