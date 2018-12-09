@@ -43,7 +43,6 @@ var server = http.createServer(function(request, response){
     var newAmount=amount-1
     response.setHeader('Content-Type', 'text/javascript')
     fs.writeFileSync('./db',newAmount)
-    var string=fs.readFileSync('./image.jpg')
     response.write(`
       {
         "success":true,
@@ -53,7 +52,7 @@ var server = http.createServer(function(request, response){
     response.end()
   }else{
     response.statusCode = 404
-    response.write('找不到')
+    response.write('找不到','utf-8')
     response.end()
   }
 

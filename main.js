@@ -1,4 +1,4 @@
-window.ajax=function(method,url,body,success,fail){
+window.ajax=function({method,url,body,success,fail}){
     let request=new XMLHttpRequest()
     request.open(method,url)
     request.onreadystatechange=function(){
@@ -8,18 +8,24 @@ window.ajax=function(method,url,body,success,fail){
             let response=JSON.parse(request.responseText)
             success.call(undefined,response)
           }else{
-            fail.call(undefined,response)
+            fail.call(undefined,request.response)
           }
       }
     }
     request.send(body)
   }
-function success(result){
-   amount.innerText=result.amount
+function success(response){
+   amount.innerText=response.amount
 }
-function fail(result){
-    amount.innerText=result
+function fail(response){
+    amount.innerText=response
  }
 button.onclick=()=>{
-    window.ajax('get','/pay','',success,fail)
+    window.ajax({
+        'method':'post',
+        'url':'/pay',
+        'body':'a=1&&b=2',
+        'success':success,
+        'fail':fail
+    })
 }
